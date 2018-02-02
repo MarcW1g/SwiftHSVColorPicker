@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class SwiftHSVColorPicker: UIView, ColorWheelDelegate, BrightnessViewDelegate {
+open class SwiftHSVColorPicker: UIView, ColorWheelDelegate {
     var colorWheel: ColorWheel!
     var selectedColorView: SelectedColorView!
 
@@ -15,6 +15,8 @@ open class SwiftHSVColorPicker: UIView, ColorWheelDelegate, BrightnessViewDelega
     var hue: CGFloat = 1.0
     var saturation: CGFloat = 1.0
     var brightness: CGFloat = 1.0
+
+    var colorDelegate: ColorPickerDelegate?
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -61,17 +63,13 @@ open class SwiftHSVColorPicker: UIView, ColorWheelDelegate, BrightnessViewDelega
     }
     
     func hueAndSaturationSelected(_ hue: CGFloat, saturation: CGFloat) {
+        print("Hello")
         self.hue = hue
         self.saturation = saturation
         self.color = UIColor(hue: self.hue, saturation: self.saturation, brightness: self.brightness, alpha: 1.0)
-        brightnessView.setViewColor(self.color)
-        selectedColorView.setViewColor(self.color)
-    }
-    
-    func brightnessSelected(_ brightness: CGFloat) {
-        self.brightness = brightness
-        self.color = UIColor(hue: self.hue, saturation: self.saturation, brightness: self.brightness, alpha: 1.0)
-        colorWheel.setViewBrightness(brightness)
-        selectedColorView.setViewColor(self.color)
+
+        self.colorDelegate?.selectedColorHue(hue: hue, saturation: saturation)
+//        brightnessView.setViewColor(self.color)
+//        selectedColorView.setViewColor(self.color)
     }
 }

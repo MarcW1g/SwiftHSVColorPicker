@@ -8,7 +8,12 @@
 import Foundation
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ColorPickerDelegate {
+    func selectedColorHue(hue: CGFloat, saturation: CGFloat) {
+        print(hue)
+        print(saturation)
+    }
+
     
     // Init ColorPicker with yellow
     var selectedColor: UIColor = UIColor.white
@@ -22,6 +27,7 @@ class ViewController: UIViewController {
 
         // Setup Color Picker
         colorPicker.setViewColor(selectedColor)
+        colorPicker.colorDelegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,4 +45,5 @@ class ViewController: UIViewController {
         
         print(selectedColor!)
     }
+
 }
